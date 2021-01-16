@@ -47,4 +47,14 @@ public class StockOrder {
     public int hashCode() {
         return Objects.hash(corporation, priceLimit, sharesNumber);
     }
+
+//    @Override
+//    public String toString() {
+//        return "StockOrder{" +
+//                "corporation=" + corporation +
+//                ", stockholder=" + stockholder +
+//                ", priceLimit=" + priceLimit +
+//                ", sharesNumber=" + sharesNumber +
+//                '}';
+//    }
 }
