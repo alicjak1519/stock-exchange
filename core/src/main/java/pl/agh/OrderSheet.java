@@ -1,3 +1,5 @@
+package pl.agh;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +57,7 @@ public class OrderSheet {
 
     @Override
     public String toString() {
-        return "OrderSheet{" +
+        return "java.pl.agh.OrderSheet{" +
                 "corporation=" + corporation +
                 ", buyOrders=" + buyOrders +
                 ", sellOrders=" + sellOrders +

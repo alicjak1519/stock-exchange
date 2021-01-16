@@ -1,3 +1,5 @@
+package pl.agh;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +72,7 @@ public class Stockholder {
 
     @Override
     public String toString() {
-        return "Stockholder{" +
+        return "java.pl.agh.Stockholder{" +
                 "budget=" + budget +
                 ", stockholderStocks=" + stockholderStocks +
                 '}';

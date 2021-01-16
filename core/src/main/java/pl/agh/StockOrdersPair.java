@@ -1,3 +1,5 @@
+package pl.agh;
+
 import java.util.Objects;
 
 public class StockOrdersPair {
@@ -33,7 +35,7 @@ public class StockOrdersPair {
 
     @Override
     public String toString() {
-        return "StockOrdersPair{" +
+        return "java.pl.agh.StockOrdersPair{" +
                 "sellOrder=" + sellOrder +
                 ", buyOrder=" + buyOrder +
                 '}';

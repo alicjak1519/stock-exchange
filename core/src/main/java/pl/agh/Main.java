@@ -1,3 +1,5 @@
+package pl.agh;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,9 +68,7 @@ public class Main {
             while (true) {
                 try {
                     List<StockOrdersPair> stockOrdersPairs = testOrderSheet.buildStockOrdersPairs();
-                    stockOrdersPairs.forEach(stockOrdersPair -> {
-                        testOrderSheet.realizeTransaction(stockOrdersPair);
-                    });
+                    stockOrdersPairs.forEach(testOrderSheet::realizeTransaction);
                     Thread.sleep(1000 * 3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -76,8 +76,8 @@ public class Main {
             }
         });
 
-        buyOrdersGeneration.forEach(thread -> thread.start());
-        sellOrdersGeneration.forEach(thread -> thread.start());
+        buyOrdersGeneration.forEach(Thread::start);
+        sellOrdersGeneration.forEach(Thread::start);
         printMeOrders.start();
         realizeTransaction.start();
     }

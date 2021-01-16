@@ -1,3 +1,5 @@
+package pl.agh;
+
 import java.util.Objects;
 
 public class StockOrder {
@@ -50,7 +52,7 @@ public class StockOrder {
 
 //    @Override
 //    public String toString() {
-//        return "StockOrder{" +
+//        return "java.pl.agh.StockOrder{" +
 //                "corporation=" + corporation +
 //                ", stockholder=" + stockholder +
 //                ", priceLimit=" + priceLimit +

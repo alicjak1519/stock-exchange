@@ -1,3 +1,5 @@
+package pl.agh;
+
 import java.util.Objects;
 
 public class Corporation {
