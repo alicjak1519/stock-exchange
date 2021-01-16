@@ -18,6 +18,8 @@ settings.gradle
 # IDEA
 # ----
 .idea/
+.idea/*
+.idea/codeStyles/
 !/.idea
 /.idea/*
 !/.idea/codeStyles
