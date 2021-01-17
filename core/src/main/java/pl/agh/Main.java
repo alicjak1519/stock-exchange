@@ -1,7 +1,6 @@
 package pl.agh;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,62 +22,6 @@ public class Main {
         stockholders.add(testStockholderA);
         stockholders.add(testStockholderB);
 
-        List<Thread> buyOrdersGeneration = stockholders
-                .stream()
-                .map(stockholder -> new Thread(() -> {
-                    while (true) {
-                        try {
-                            BuyOrder buyOrder = stockholder.generateRandomBuyOrder();
-                            testOrderSheet.addBuyOrder(buyOrder);
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }))
-                .collect(Collectors.toList());
-
-        List<Thread> sellOrdersGeneration = stockholders
-                .stream()
-                .map(stockholder -> new Thread(() -> {
-                    while (true) {
-                        try {
-                            SellOrder sellOrder = stockholder.generateRandomSellOrder();
-                            testOrderSheet.addSellOrder(sellOrder);
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }))
-                .collect(Collectors.toList());
-
-        Thread printMeOrders = new Thread(() -> {
-            while (true) {
-                try {
-                    System.out.println(testOrderSheet.getCurrentState());
-                    Thread.sleep(1000 * 3);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        Thread realizeTransaction = new Thread(() -> {
-            while (true) {
-                try {
-                    List<StockOrdersPair> stockOrdersPairs = testOrderSheet.buildStockOrdersPairs();
-                    stockOrdersPairs.forEach(testOrderSheet::realizeTransaction);
-                    Thread.sleep(1000 * 3);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        buyOrdersGeneration.forEach(Thread::start);
-        sellOrdersGeneration.forEach(Thread::start);
-        printMeOrders.start();
-        realizeTransaction.start();
+        StockExchange.startSession(testOrderSheet, stockholders);
     }
 }
