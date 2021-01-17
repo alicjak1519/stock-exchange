@@ -50,13 +50,4 @@ public class StockOrder {
         return Objects.hash(corporation, priceLimit, sharesNumber);
     }
 
-//    @Override
-//    public String toString() {
-//        return "java.pl.agh.StockOrder{" +
-//                "corporation=" + corporation +
-//                ", stockholder=" + stockholder +
-//                ", priceLimit=" + priceLimit +
-//                ", sharesNumber=" + sharesNumber +
-//                '}';
-//    }
 }

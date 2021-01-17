@@ -3,7 +3,7 @@ package pl.agh;
 import java.util.Objects;
 
 public class Corporation {
-    int sharePrice;
+    private float sharePrice;
     String name;
 
     public Corporation(int sharePrice, String name) {
@@ -11,10 +11,17 @@ public class Corporation {
         this.name = name;
     }
 
-    public int getSharePrice() {
-        return sharePrice;
+    public float getSharePrice() {
+        synchronized (this){
+            return sharePrice;
+        }
     }
 
+    public void setSharePrice(float actualSharePrice) {
+        synchronized (this) {
+            this.sharePrice = actualSharePrice;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

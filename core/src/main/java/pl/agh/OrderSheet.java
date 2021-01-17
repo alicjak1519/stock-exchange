@@ -45,14 +45,18 @@ public class OrderSheet {
         Stockholder seller = stockOrdersPair.getSellOrder().getStockholder();
         Stockholder buyer = stockOrdersPair.getBuyOrder().getStockholder();
 
-        seller.buy(stockOrdersPair.getSellOrder());
-        buyer.sell(stockOrdersPair.getBuyOrder());
+        if (seller.canSell(stockOrdersPair.getSellOrder()) && buyer.canBuy(stockOrdersPair.getBuyOrder())) {
+            seller.sell(stockOrdersPair.getSellOrder());
+            buyer.buy(stockOrdersPair.getBuyOrder());
 
-        synchronized (this) {
-            sellOrders.remove(stockOrdersPair.getSellOrder());
-            buyOrders.remove(stockOrdersPair.getBuyOrder());
+            synchronized (this) {
+                sellOrders.remove(stockOrdersPair.getSellOrder());
+                buyOrders.remove(stockOrdersPair.getBuyOrder());
+            }
+            System.out.println("Transaction done!!! " + stockOrdersPair.getSellOrder());
+        } else {
+            System.out.println("Transaction can't be done!!! " + stockOrdersPair.getSellOrder());
         }
-        System.out.println("Transaction done!!! " + stockOrdersPair.getSellOrder());
     }
 
     @Override

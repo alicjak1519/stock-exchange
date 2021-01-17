@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StockExchange {
+    private int time = 100;
 
     private StockExchange() {
     }
@@ -27,7 +28,7 @@ public class StockExchange {
             while (true) {
                 try {
                     System.out.println(orderSheet.getCurrentState());
-                    Thread.sleep(1000 * 3);
+                    Thread.sleep(time * 3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -48,7 +49,7 @@ public class StockExchange {
                 try {
                     List<StockOrdersPair> stockOrdersPairs = orderSheet.buildStockOrdersPairs();
                     stockOrdersPairs.forEach(orderSheet::realizeTransaction);
-                    Thread.sleep(1000 * 3);
+                    Thread.sleep(time * 3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -62,7 +63,7 @@ public class StockExchange {
                 try {
                     SellOrder sellOrder = stockholder.generateRandomSellOrder();
                     orderSheet.addSellOrder(sellOrder);
-                    Thread.sleep(1000);
+                    Thread.sleep(time);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -76,7 +77,7 @@ public class StockExchange {
                 try {
                     BuyOrder buyOrder = stockholder.generateRandomBuyOrder();
                     orderSheet.addBuyOrder(buyOrder);
-                    Thread.sleep(1000);
+                    Thread.sleep(time);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
