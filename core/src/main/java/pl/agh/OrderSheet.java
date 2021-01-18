@@ -1,16 +1,23 @@
 package pl.agh;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderSheet {
-    Corporation corporation;
-    List<BuyOrder> buyOrders = new ArrayList<>();
-    List<SellOrder> sellOrders = new ArrayList<>();
-    MatchMaker matchMaker = new MatchMaker();
+    private List<Corporation> corporations;
+    private List<BuyOrder> buyOrders = new ArrayList<>();
+    private List<SellOrder> sellOrders = new ArrayList<>();
+    private MatchMaker matchMaker = new MatchMaker();
+    private float actualGlobalSharePrice = 0;
+    Map<Corporation, Float> currentState = new HashMap<>();
 
-    public OrderSheet(Corporation corporation) {
-        this.corporation = corporation;
+    public OrderSheet(List<Corporation> corporations) {
+        this.corporations = corporations;
+        this.corporations.forEach(corporation -> {
+            this.currentState.put(corporation, (float) 0);
+        });
     }
 
     public void addSellOrder(SellOrder sellOrder) {
@@ -25,12 +32,12 @@ public class OrderSheet {
         }
     }
 
-    public String getCurrentState() {
-        String currentState;
-        synchronized (this) {
-            currentState = buyOrders.size() + ", " + sellOrders.size();
-        }
+    public Map<Corporation, Float> getCurrentState(){
         return currentState;
+    }
+
+    public void updateCurrentState(Corporation corporation, Float sharePrice){
+        currentState.put(corporation, sharePrice);
     }
 
     public List<StockOrdersPair> buildStockOrdersPairs() {
@@ -46,23 +53,21 @@ public class OrderSheet {
         Stockholder buyer = stockOrdersPair.getBuyOrder().getStockholder();
 
         if (seller.canSell(stockOrdersPair.getSellOrder()) && buyer.canBuy(stockOrdersPair.getBuyOrder())) {
-            seller.sell(stockOrdersPair.getSellOrder());
-            buyer.buy(stockOrdersPair.getBuyOrder());
+            seller.sell(stockOrdersPair);
+            buyer.buy(stockOrdersPair);
 
             synchronized (this) {
                 sellOrders.remove(stockOrdersPair.getSellOrder());
                 buyOrders.remove(stockOrdersPair.getBuyOrder());
             }
-            System.out.println("Transaction done!!! " + stockOrdersPair.getSellOrder());
-        } else {
-            System.out.println("Transaction can't be done!!! " + stockOrdersPair.getSellOrder());
+            actualGlobalSharePrice = stockOrdersPair.getBuyOrder().priceLimit;
+            updateCurrentState(stockOrdersPair.getBuyOrder().getCorporation(), actualGlobalSharePrice);
         }
     }
 
     @Override
     public String toString() {
         return "java.pl.agh.OrderSheet{" +
-                "corporation=" + corporation +
                 ", buyOrders=" + buyOrders +
                 ", sellOrders=" + sellOrders +
                 '}';
