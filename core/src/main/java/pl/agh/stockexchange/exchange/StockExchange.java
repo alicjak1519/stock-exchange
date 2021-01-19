@@ -1,5 +1,6 @@
 package pl.agh.stockexchange.exchange;
 
+import pl.agh.stockexchange.order.Order;
 import pl.agh.stockexchange.stock.Stock;
 
 import java.math.BigDecimal;
@@ -18,6 +19,8 @@ public interface StockExchange {
     void buy(Stock stock, int quantity, BigDecimal price);
 
     void sell(Stock stock, int quantity, BigDecimal price);
+
+    void addOrder(Order order);
 
     boolean isOpen();
 }

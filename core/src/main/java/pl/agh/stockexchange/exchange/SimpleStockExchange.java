@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class SimpleStockExchange implements StockExchange {
     private final static Logger LOGGER = Logger.getLogger(SimpleStockExchange.class.getName());
 
-    private final List<Stock> stocks;
     private final Clock clock;
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(100);
     private final ConcurrentMap<String, OrderSheet> orderSheets;
@@ -36,13 +35,12 @@ public class SimpleStockExchange implements StockExchange {
     }
 
     public SimpleStockExchange(List<Stock> stocks, Clock clock) {
-        this(stocks, clock, stocks.stream()
+        this(clock, stocks.stream()
                 .map(stock -> new AbstractMap.SimpleEntry<>(stock.getSymbol(), new OrderSheet(new AtomicReference<>(stock))))
                 .collect(Collectors.toConcurrentMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue)));
     }
 
-    public SimpleStockExchange(List<Stock> stocks, Clock clock, ConcurrentMap<String, OrderSheet> orderSheets) {
-        this.stocks = stocks;
+    public SimpleStockExchange(Clock clock, ConcurrentMap<String, OrderSheet> orderSheets) {
         this.clock = clock;
         this.orderSheets = orderSheets;
     }
@@ -54,7 +52,9 @@ public class SimpleStockExchange implements StockExchange {
 
     @Override
     public Optional<Stock> findBySymbol(@NotNull String symbol) {
-        return stocks.stream().filter(stock -> stock.getSymbol().equals(symbol)).findFirst();
+        return Optional.ofNullable(orderSheets.get(symbol))
+                .map(OrderSheet::getStock)
+                .map(AtomicReference::get);
     }
 
     @Override
@@ -89,6 +89,11 @@ public class SimpleStockExchange implements StockExchange {
         var order = new Order(stock, quantity, price, Instant.now(clock), OrderType.SELL);
 
         orderSheets.get(stock.getSymbol()).addOrder(order);
+    }
+
+    @Override
+    public void addOrder(Order order) {
+        orderSheets.get(order.getStock().getSymbol()).addOrder(order);
     }
 
     @Override
