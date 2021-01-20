@@ -9,4 +9,5 @@ pluginManagement {
 }
 
 include(":core")
+include(":client")
 
