@@ -16,8 +16,13 @@ public class StockExchangeUiApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = Paths.get("./src/main/resources/StockExchangeUiApplication.fxml").toUri().toURL();
+        URL url = Paths.get("./src/main/resources/StockExchangeUi.fxml").toUri().toURL();
+        StockExchangeUiController stockExchangeUiController = new StockExchangeUiController();
+
         Parent root = FXMLLoader.load(url);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(stockExchangeUiController);
 
         Scene scene = new Scene(root, 600, 400);
 
