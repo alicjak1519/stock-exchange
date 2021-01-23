@@ -28,12 +28,12 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <Label layoutX="133.0" layoutY="231.0" text="Stock Price" />
-                                <Pane layoutX="14.0" layoutY="14.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
+                                <Pane fx:id="PKNPriceCoursePane" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
                                 <Text layoutX="395.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary" />
                                 <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
                                 <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Text fx:id="PKNPrice" layoutX="386.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actual Stock Price: 423 $" />
+                                <Label fx:id="PKNPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
                                 <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
                                 <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
@@ -51,7 +51,7 @@
                                 <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
                                 <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Text fx:id="PKOPrice" layoutX="386.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actual Stock Price: 423 $" />
+                                <Label fx:id="PKOPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
                                 <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
                                 <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
@@ -69,7 +69,7 @@
                                 <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
                                 <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Text fx:id="ALEPrice" layoutX="386.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actual Stock Price: 423 $" />
+                                <Label fx:id="ALEPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
                                 <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
                                 <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
@@ -87,7 +87,7 @@
                                 <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
                                 <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Text fx:id="JSWPrice" layoutX="386.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actual Stock Price: 423 $" />
+                                <Label fx:id="JSWPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
                                 <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
                                 <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
                                 <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
@@ -100,12 +100,12 @@
         <Pane prefHeight="164.0" prefWidth="600.0">
             <children>
                 <Text layoutX="399.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Order" />
-                <TextField layoutX="274.0" layoutY="29.0" promptText="Corporation Name" />
-                <TextField layoutX="274.0" layoutY="62.0" promptText="Action Numbers" />
-                <Button layoutX="449.0" layoutY="28.0" mnemonicParsing="false" text="Generate Sell Order" />
-                <Button layoutX="448.0" layoutY="61.0" mnemonicParsing="false" text="Generate Buy Order" />
-                <Button layoutX="104.0" layoutY="36.0" mnemonicParsing="false" text="Start" onAction="#startClicked"/>
-                <Label fx:id="startLabel" layoutX="117.0" layoutY="67.0" text="***" />
+                <TextField fx:id="corporationNameTextField" layoutX="274.0" layoutY="29.0" promptText="Corporation Name" />
+                <TextField fx:id="actionsNumberTextField" layoutX="274.0" layoutY="62.0" promptText="Actions Number" />
+                <Button layoutX="449.0" layoutY="28.0" mnemonicParsing="false" onAction="#generateSellClicked" text="Generate Sell Order" />
+                <Button layoutX="448.0" layoutY="61.0" mnemonicParsing="false" onAction="#generateBuyClicked" text="Generate Buy Order" />
+                <Button layoutX="25.0" layoutY="31.0" mnemonicParsing="false" onAction="#startClicked" text="Start" />
+            <TextField fx:id="unitPriceTextField" layoutX="89.0" layoutY="31.0" promptText="Unit Price" />
             </children>
         </Pane>
     </children>
