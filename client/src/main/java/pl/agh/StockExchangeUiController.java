@@ -11,6 +11,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import pl.agh.stockexchange.exchange.SimpleStockExchange;
 import pl.agh.stockexchange.exchange.StockExchange;
 import pl.agh.stockexchange.order.Order;
@@ -59,21 +60,35 @@ public class StockExchangeUiController implements Initializable {
     @FXML
     private Pane JSWPriceCoursePane;
 
+    @FXML
+    private Text PKNBuyOrdersNumber;
+    @FXML
+    private Text PKOBuyOrdersNumber;
+    @FXML
+    private Text ALEBuyOrdersNumber;
+    @FXML
+    private Text JSWBuyOrdersNumber;
+
+    @FXML
+    private Text PKNSellOrdersNumber;
+    @FXML
+    private Text PKOSellOrdersNumber;
+    @FXML
+    private Text ALESellOrdersNumber;
+    @FXML
+    private Text JSWSellOrdersNumber;
+
     private final Map<String, Label> stocksLabels = new HashMap<>();
     private final Map<String, Pane> stocksPanes = new HashMap<>();
+    private final Map<String, Text> stocksBuyNumbersText = new HashMap<>();
+    private final Map<String, Text> stocksSellNumbersText = new HashMap<>();
 
-    private static final int MAX_DATA_POINTS = 50;
+    private static final int MAX_DATA_POINTS = 200;
     private int xSeriesData = 0;
 
-    private XYChart.Series<Number, Number> PKNSeries = new XYChart.Series<>();
-    private XYChart.Series<Number, Number> PKOSeries = new XYChart.Series<>();
-    private XYChart.Series<Number, Number> ALESeries = new XYChart.Series<>();
-    private XYChart.Series<Number, Number> JSWSeries = new XYChart.Series<>();
+    private Map<String, XYChart.Series<Number, Number>> stocksSeries = new HashMap<>();
 
-    private Map<String, XYChart.Series<Number, Number>> socksSeries = new HashMap<>();
-
-    private ConcurrentLinkedQueue<Number> PKNData = new ConcurrentLinkedQueue<>();
-
+    private Map<String, ConcurrentLinkedQueue<Number>> stocksDataQueues = new HashMap<>();
 
     private ExecutorService executor;
 
@@ -81,6 +96,13 @@ public class StockExchangeUiController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        createStocksLabels();
+        createStocksPanes();
+        createStocksSeries();
+        createStocksDataQueues();
+        createStocksBuyNumberText();
+        createStocksSellNumberText();
+
         timeLine = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
         timeLine.setForceZeroInRange(false);
         timeLine.setAutoRanging(false);
@@ -88,153 +110,7 @@ public class StockExchangeUiController implements Initializable {
         timeLine.setTickMarkVisible(false);
         timeLine.setMinorTickVisible(false);
 
-        NumberAxis yAxis = new NumberAxis();
-
-        LineChart<Number, Number> PKNPriceCourseChart = new LineChart<Number, Number>(timeLine, yAxis) {
-            @Override
-            protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
-            }
-        };
-
-        PKNPriceCourseChart.setMaxWidth(300);
-        PKNPriceCourseChart.setMaxHeight(200);
-
-        PKNPriceCourseChart.setAnimated(false);
-        PKNPriceCourseChart.setTitle("Stock Action Price");
-        PKNPriceCourseChart.setHorizontalGridLinesVisible(true);
-
-        // Set Name for Series
-        PKNSeries.setName("Series 1");
-
-        // Add Chart Series
-        PKNPriceCourseChart.getData().addAll(PKNSeries);
-        PKNPriceCoursePane.getChildren().clear();
-        PKNPriceCoursePane.getChildren().add(PKNPriceCourseChart);
-    }
-
-//    private void createPriceCourseChart(Stock stock){
-//        NumberAxis priceAxis = new NumberAxis();
-//
-//        LineChart<Number, Number> PriceCourseChart = new LineChart<Number, Number>(timeLine, priceAxis) {
-//            @Override
-//            protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
-//            }
-//        };
-//
-//        PriceCourseChart.setMaxWidth(300);
-//        PriceCourseChart.setMaxHeight(200);
-//
-//        PriceCourseChart.setAnimated(false);
-//        PriceCourseChart.setTitle("Stock Action Price");
-//        PriceCourseChart.setHorizontalGridLinesVisible(true);
-//
-//        // Set Name for Series
-//        PKNSeries.setName("Series 1");
-//
-//        // Add Chart Series
-//        Pane PriceCoursePane =
-//        PriceCourseChart.getData().addAll(PKNSeries);
-//        PriceCourseChart.getChildren().clear();
-//        PriceCourseChart.getChildren().add(PriceCourseChart);
-//    }
-
-    private void prepareTimeline() {
-        // Every frame to take any data from queue and add to chart
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                addDataToSeries();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
-    private void addDataToSeries() {
-        for (int i = 0; i < 20; i++) { //-- add 20 numbers to the plot+
-            if (PKNData.isEmpty()) break;
-            PKNSeries.getData().add(new XYChart.Data<>(xSeriesData++, PKNData.remove()));
-        }
-        // remove points to keep us at no more than MAX_DATA_POINTS
-        if (PKNSeries.getData().size() > MAX_DATA_POINTS) {
-            PKNSeries.getData().remove(0, PKNSeries.getData().size() - MAX_DATA_POINTS);
-        }
-        // update
-        timeLine.setLowerBound(xSeriesData - MAX_DATA_POINTS);
-        timeLine.setUpperBound(xSeriesData - 1);
-    }
-
-    private class AddToQueue implements Runnable {
-        public void run() {
-            try {
-                // add a item of random data to queue
-                PKNData.add(Math.random());
-
-                Thread.sleep(500);
-                executor.execute(this);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private class UpdatePriceLabels implements Runnable {
-        public void run() {
-            while (stockExchange.isOpen()) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        stocksLabels.forEach((name, stockLabel) -> {
-                                    stockExchange.findBySymbol(name)
-                                            .map(Stock::getPrice)
-                                            .ifPresent(price -> {
-                                                stockLabel.setText("Actual Stock Price: " + price + "$");
-                                                PKNData.add(price);
-                                            });
-
-
-                                }
-                        );
-                    }
-                });
-            }
-        }
-    }
-
-    @FXML
-    public void startClicked(Event e) {
-        final var orders = stocks
-                .stream()
-                .flatMap(stock -> OrderGenerator.generateOrders(stock).stream())
-                .collect(Collectors.toList());
-        orders.forEach(stockExchange::addOrder);
-        stockExchange.open();
-
-        createStocksLabels();
-
-        executor = Executors.newCachedThreadPool(new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                Thread thread = new Thread(r);
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
-
-        AddToQueue addToQueue = new AddToQueue();
-        UpdatePriceLabels updatePriceLabels = new UpdatePriceLabels();
-        executor.execute(addToQueue);
-        executor.execute(updatePriceLabels);
-
-        //-- Prepare Timeline
-        prepareTimeline();
+        stocks.forEach(this::createPriceCourseChart);
     }
 
     public void createStocksLabels() {
@@ -251,6 +127,55 @@ public class StockExchangeUiController implements Initializable {
         stocksPanes.put("PKN", PKNPriceCoursePane);
     }
 
+    public void createStocksBuyNumberText() {
+        stocksBuyNumbersText.put("PKO", PKOBuyOrdersNumber);
+        stocksBuyNumbersText.put("ALE", ALEBuyOrdersNumber);
+        stocksBuyNumbersText.put("JSW", JSWBuyOrdersNumber);
+        stocksBuyNumbersText.put("PKN", PKNBuyOrdersNumber);
+    }
+
+    public void createStocksSellNumberText() {
+        stocksSellNumbersText.put("PKO", PKOSellOrdersNumber);
+        stocksSellNumbersText.put("ALE", ALESellOrdersNumber);
+        stocksSellNumbersText.put("JSW", JSWSellOrdersNumber);
+        stocksSellNumbersText.put("PKN", PKNSellOrdersNumber);
+    }
+
+    private void createStocksDataQueues() {
+        stocks.forEach(stock -> stocksDataQueues.put(stock.getSymbol(), new ConcurrentLinkedQueue<>()));
+    }
+
+    private void createStocksSeries() {
+        stocks.forEach(stock -> stocksSeries.put(stock.getSymbol(), new XYChart.Series<>()));
+    }
+
+    @FXML
+    public void startClicked(Event e) {
+        final var orders = stocks
+                .stream()
+                .flatMap(stock -> OrderGenerator.generateOrders(stock).stream())
+                .collect(Collectors.toList());
+        orders.forEach(stockExchange::addOrder);
+        stockExchange.open();
+
+        executor = Executors.newCachedThreadPool(new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r);
+                thread.setDaemon(true);
+                return thread;
+            }
+        });
+
+        UpdateStockInfo updatePriceLabels = new UpdateStockInfo();
+        executor.execute(updatePriceLabels);
+        prepareTimeline();
+    }
+
+    @FXML
+    public void stopClicked(Event e) {
+        stockExchange.close();
+    }
 
     @FXML
     public void generateSellClicked(Event e) {
@@ -273,6 +198,96 @@ public class StockExchangeUiController implements Initializable {
             Order buyOrder = new Order(stock, actionsNumber, price, Instant.now(), OrderType.BUY);
 
             stockExchange.addOrder(buyOrder);
+        }
+    }
+
+    private void createPriceCourseChart(Stock stock) {
+        NumberAxis priceAxis = new NumberAxis();
+
+        LineChart<Number, Number> priceCourseChart = new LineChart<Number, Number>(timeLine, priceAxis) {
+            @Override
+            protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
+            }
+        };
+
+        priceCourseChart.setMaxWidth(300);
+        priceCourseChart.setMaxHeight(200);
+
+        priceCourseChart.setAnimated(false);
+        priceCourseChart.setTitle("Stock Action Price");
+        priceCourseChart.setHorizontalGridLinesVisible(true);
+
+        stocksSeries.get(stock.getSymbol()).setName("Series: " + stock.getSymbol());
+
+        Pane priceCoursePane = stocksPanes.get(stock.getSymbol());
+        priceCourseChart.getData().addAll(stocksSeries.get(stock.getSymbol()));
+
+        priceCoursePane.getChildren().clear();
+        priceCoursePane.getChildren().add(priceCourseChart);
+    }
+
+    private void prepareTimeline() {
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                addDataToSeries();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private void addDataToSeries() {
+        stocks.forEach(stock -> {
+            ConcurrentLinkedQueue<Number> stockData = stocksDataQueues.get(stock.getSymbol());
+            XYChart.Series<Number, Number> stockSeries = stocksSeries.get(stock.getSymbol());
+
+            for (int i = 0; i < 3; i++) {
+                if (stockData.isEmpty()) break;
+                stockSeries.getData().add(new XYChart.Data<>(xSeriesData++, stockData.remove()));
+            }
+
+            if (stockSeries.getData().size() > MAX_DATA_POINTS) {
+                stockSeries.getData().remove(0, stockSeries.getData().size() - MAX_DATA_POINTS);
+            }
+
+            timeLine.setLowerBound(xSeriesData - MAX_DATA_POINTS);
+            timeLine.setUpperBound(xSeriesData - 1);
+        });
+    }
+
+    private class UpdateStockInfo implements Runnable {
+        public void run() {
+            while (stockExchange.isOpen()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        stocks.forEach(stock -> {
+                                    stockExchange.findBySymbol(stock.getSymbol())
+                                            .map(Stock::getPrice)
+                                            .ifPresent(price -> {
+                                                stocksLabels.get(stock.getSymbol()).setText("Actual Stock Price: " + price + "$");
+                                                stocksDataQueues.get(stock.getSymbol()).add(price);
+                                            });
+                                }
+                        );
+                        stocks.forEach(stock -> {
+                                    int buyOrdersNumber = stockExchange.getBuyOrdersNumber(stock);
+                                    stocksBuyNumbersText.get(stock.getSymbol()).setText("Number: " + buyOrdersNumber);
+                                    int sellOrdersNumber = stockExchange.getSellOrdersNumber(stock);
+                                    stocksSellNumbersText.get(stock.getSymbol()).setText("Number: " + sellOrdersNumber);
+                                }
+                        );
+                    }
+                });
+            }
         }
     }
 

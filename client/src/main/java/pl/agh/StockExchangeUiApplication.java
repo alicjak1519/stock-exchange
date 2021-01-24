@@ -24,7 +24,7 @@ public class StockExchangeUiApplication extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(stockExchangeUiController);
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 600, 500);
 
         stage.setTitle("Stock Exchange");
         stage.setScene(scene);
