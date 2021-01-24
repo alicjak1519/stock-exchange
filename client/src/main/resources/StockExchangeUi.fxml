@@ -10,102 +10,176 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agh.StockExchangeUiController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agh.StockExchangeUiController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="194.0" minHeight="20.0" prefHeight="98.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="305.0" minHeight="10.0" prefHeight="302.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <TabPane prefHeight="288.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
+        <TabPane prefHeight="253.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
             <tabs>
                 <Tab text="PKN Orlen">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="600.0">
                             <children>
-                                <Label layoutX="133.0" layoutY="231.0" text="Stock Price" />
-                                <Pane fx:id="PKNPriceCoursePane" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
-                                <Text layoutX="395.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary" />
-                                <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
-                                <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Label fx:id="PKNPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
-                                <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
-                                <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
+                                <Label layoutX="133.0" layoutY="231.0" />
+                                <Pane fx:id="PKNPriceCoursePane" layoutX="30.0" layoutY="27.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
+                                <Text layoutX="380.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text layoutX="406.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text fx:id="PKNBuyOrdersNumber" layoutX="404.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Label fx:id="PKNPriceLabel" layoutX="367.0" layoutY="63.0" text="Actual Stock Price: 423 $">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Label>
+                                <Text layoutX="406.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text fx:id="PKNSellOrdersNumber" layoutX="404.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="PKO BP">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="600.0">
                             <children>
-                                <Label layoutX="133.0" layoutY="231.0" text="Stock Price" />
-                                <Pane layoutX="14.0" layoutY="14.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
-                                <Text layoutX="395.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary" />
-                                <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
-                                <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Label fx:id="PKOPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
-                                <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
-                                <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
+                                <Label layoutX="133.0" layoutY="231.0" />
+                                <Pane fx:id="PKOPriceCoursePane" layoutX="30.0" layoutY="27.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
+                                <Text layoutX="380.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text layoutX="406.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text fx:id="PKOBuyOrdersNumber" layoutX="404.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Label fx:id="PKOPriceLabel" layoutX="367.0" layoutY="63.0" text="Actual Stock Price: 423 $">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Label>
+                                <Text layoutX="406.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text fx:id="PKOSellOrdersNumber" layoutX="404.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Allegro">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="600.0">
                             <children>
-                                <Label layoutX="133.0" layoutY="231.0" text="Stock Price" />
-                                <Pane layoutX="14.0" layoutY="14.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
-                                <Text layoutX="395.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary" />
-                                <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
-                                <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Label fx:id="ALEPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
-                                <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
-                                <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
+                                <Label layoutX="133.0" layoutY="231.0" />
+                                <Pane fx:id="ALEPriceCoursePane" layoutX="30.0" layoutY="27.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
+                                <Text layoutX="380.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text layoutX="406.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text fx:id="ALEBuyOrdersNumber" layoutX="404.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Label fx:id="ALEPriceLabel" layoutX="367.0" layoutY="63.0" text="Actual Stock Price: 423 $">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Label>
+                                <Text layoutX="406.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text fx:id="ALESellOrdersNumber" layoutX="404.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Jastrzębska Spółka Węglowa">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="600.0">
                             <children>
-                                <Label layoutX="133.0" layoutY="231.0" text="Stock Price" />
-                                <Pane layoutX="14.0" layoutY="14.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
-                                <Text layoutX="395.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary" />
-                                <Text layoutX="417.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders" />
-                                <Text layoutX="415.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="389.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
-                                <Label fx:id="JSWPriceLabel" layoutX="386.0" layoutY="63.0" text="Actual Stock Price: 423 $" />
-                                <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders" />
-                                <Text layoutX="415.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 13" />
-                                <Text layoutX="388.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value: 134 323 433 $ " />
+                                <Label layoutX="133.0" layoutY="231.0" />
+                                <Pane fx:id="JSWPriceCoursePane" layoutX="30.0" layoutY="27.0" prefHeight="206.0" prefWidth="300.0" style="-fx-border-color: #000000;" />
+                                <Text layoutX="380.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Sheet Summary">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font></Text>
+                                <Text layoutX="406.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Orders">
+                           <font>
+                              <Font size="17.0" />
+                           </font></Text>
+                                <Text fx:id="JSWBuyOrdersNumber" layoutX="404.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                           <font>
+                              <Font size="17.0" />
+                           </font></Text>
+                                <Label fx:id="JSWPriceLabel" layoutX="367.0" layoutY="63.0" text="Actual Stock Price: 423 $">
+                           <font>
+                              <Font size="17.0" />
+                           </font></Label>
+                                <Text layoutX="406.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sell Orders">
+                           <font>
+                              <Font size="17.0" />
+                           </font></Text>
+                                <Text fx:id="JSWSellOrdersNumber" layoutX="404.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number: 0">
+                           <font>
+                              <Font size="17.0" />
+                           </font></Text>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
-        <Pane prefHeight="164.0" prefWidth="600.0">
+        <Pane>
             <children>
-                <Text layoutX="399.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Order" />
-                <TextField fx:id="corporationNameTextField" layoutX="274.0" layoutY="29.0" promptText="Corporation Name" />
-                <TextField fx:id="actionsNumberTextField" layoutX="274.0" layoutY="62.0" promptText="Actions Number" />
-                <Button layoutX="449.0" layoutY="28.0" mnemonicParsing="false" onAction="#generateSellClicked" text="Generate Sell Order" />
-                <Button layoutX="448.0" layoutY="61.0" mnemonicParsing="false" onAction="#generateBuyClicked" text="Generate Buy Order" />
-                <Button layoutX="25.0" layoutY="31.0" mnemonicParsing="false" onAction="#startClicked" text="Start" />
-            <TextField fx:id="unitPriceTextField" layoutX="89.0" layoutY="31.0" promptText="Unit Price" />
+                <Text layoutX="391.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Order">
+               <font>
+                  <Font size="17.0" />
+               </font></Text>
+                <TextField fx:id="corporationNameTextField" layoutX="357.0" layoutY="45.0" promptText="Corporation Symbol" />
+                <TextField fx:id="actionsNumberTextField" layoutX="357.0" layoutY="114.0" promptText="Actions Number" />
+                <Button layoutX="447.0" layoutY="153.0" mnemonicParsing="false" onAction="#generateSellClicked" text="Generate Sell Order" />
+                <Button layoutX="300.0" layoutY="153.0" mnemonicParsing="false" onAction="#generateBuyClicked" text="Generate Buy Order" />
+                <Button layoutX="94.0" layoutY="72.0" mnemonicParsing="false" onAction="#startClicked" text="Open Session" />
+            <TextField fx:id="unitPriceTextField" layoutX="357.0" layoutY="79.0" promptText="Unit Price" />
+            <Button layoutX="95.0" layoutY="126.0" mnemonicParsing="false" onAction="#stopClicked" text="Close Session" />
+            <Text layoutX="62.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock Exchange">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
             </children>
         </Pane>
     </children>
