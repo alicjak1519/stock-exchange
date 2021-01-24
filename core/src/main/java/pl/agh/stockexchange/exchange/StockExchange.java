@@ -23,4 +23,8 @@ public interface StockExchange {
     void addOrder(Order order);
 
     boolean isOpen();
+
+    int getBuyOrdersNumber(Stock stock);
+
+    int getSellOrdersNumber(Stock stock);
 }

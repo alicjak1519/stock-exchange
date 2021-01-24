@@ -100,4 +100,14 @@ public class SimpleStockExchange implements StockExchange {
     public boolean isOpen() {
         return open;
     }
+
+    @Override
+    public int getBuyOrdersNumber(Stock stock){
+        return orderSheets.get(stock.getSymbol()).getBuyOrders().size();
+    }
+
+    @Override
+    public int getSellOrdersNumber(Stock stock){
+        return orderSheets.get(stock.getSymbol()).getSellOrders().size();
+    }
 }
