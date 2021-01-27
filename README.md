@@ -3,7 +3,7 @@
 Stock exchange simulation realised in the form of the multithreading app in Java.
 
 <p align="center">
-<img src="https://github.com/alicjak1519/stock-exchange/blob/main/assets/stock_exchange_demo.gif" width="480" height="400" />  
+<img src="https://github.com/alicjak1519/stock-exchange/blob/main/assets/stock_exchange_demo.gif" width="400" height="333" />  
 </p>
 
 ### App structure
